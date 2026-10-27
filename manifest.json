@@ -1,0 +1,39 @@
+{
+  "manifest_version": 3,
+  "name": "ベネワンすごろく オートプレイ",
+  "version": "1.0.0",
+  "description": "12時間ごとにベネワンすごろくを開き、スタート→アイテム判定→サイコロを自動実行",
+  "permissions": ["alarms", "storage", "tabs", "system.display"],
+  "host_permissions": ["https://bene-one.gamefactory.jp/*"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": { "service_worker": "background.js" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "すごろくオート",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://bene-one.gamefactory.jp/game*"],
+      "js": ["bridge.js"],
+      "run_at": "document_idle",
+      "world": "ISOLATED"
+    },
+    {
+      "matches": ["https://bene-one.gamefactory.jp/game*"],
+      "js": ["main.js"],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    }
+  ]
+}
